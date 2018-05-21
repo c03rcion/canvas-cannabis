@@ -1,6 +1,7 @@
 import os
 from email.mime.image import MIMEImage
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.template.loader import render_to_string
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -186,6 +187,21 @@ def strain_detail(request, id=None):
     }
     return render(request, "reviews/strain_detail.html", context)
 
+
+@login_required
+def review_create(request):
+    # strain = get_object_or_404(Strain, id=id)
+    form = ReviewForm()
+    context = {'form': form},
+    html_form = render_to_string(
+        'reviews/review_form.html',
+        context,
+        request=request,
+    )
+
+    return JsonResponse({'html_form': html_form})
+
+
 @login_required
 def strain_review(request, id=None):
     strain = get_object_or_404(Strain, id=id)
@@ -218,4 +234,10 @@ def strain_review(request, id=None):
         "form": form,
         "strain": strain,
     }
-    return render(request, "reviews/review_form.html", context)
+    html_form = render_to_string(
+        'reviews/review_form.html',
+        context,
+        request=request,
+    )
+    return JsonResponse({'html_form': html_form})
+    # return render(request, "reviews/review_form.html", context)

@@ -2,6 +2,12 @@
 {% block head_title %}{{ strain.name }} | {{ block.super }}{% endblock head_title %}
 {% load bootstrap3 %}
 
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'reviews/js/reviews.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
 <div class="row">
@@ -48,15 +54,20 @@
     {% endif %}
     <hr/>
     {% buttons %}
-    <a href="{% url 'reviews:review' strain.id %}">
-      <button class="btn btn-default">
+    <!-- <a href="{% url 'reviews:review' strain.id %}"> -->
+      <button data-url="{% url 'reviews:review' strain.id %}" class="btn btn-default strain-review">
         {% bootstrap_icon "pencil" %} Review
       </button>
-    </a>
+    <!-- </a> -->
     {% endbuttons %}
   </div> <!--/.caption-->
 </div> <!--/.thumbnail-->
   </div> <!--/.well col-sm-12 col-lg-6-->
 </div> <!--/.row-->
+<div class="modal fade" id="modal-review">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
 </div>
 {% endblock %}
