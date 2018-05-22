@@ -2,20 +2,28 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<div class="container">
-<div class="row">
-  <div class="col-sm-6">
-    <h1>{{ strain.name }} Review</h1>
+
+
     <form method="POST" action='' enctype="multipart/form-data" class="form">
       {% csrf_token %}
-      {% bootstrap_form form layout='inline' %}
-      {% buttons %}
-      <button type=submit class="btn btn-default">
-        {% bootstrap_icon "tree-conifer" %} Submit
-      </button>
-      {% endbuttons %}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3>{{ strain.name }} Review</h3>
+      </div> <!--/.modal-header-->
+      <div class="modal-body">
+        {% bootstrap_form form layout='inline' %}
+
+      </div> <!--/.modal-body-->
+      <div class="modal-footer">
+        {% buttons %}
+        <button type=submit class="btn btn-default">
+          {% bootstrap_icon "tree-conifer" %} Submit
+        </button>
+        {% endbuttons %}
+      </div> <!--/.modal-footer-->
     </form>
-  </div>
-</div>
-</div>
+
+
 {% endblock %}
