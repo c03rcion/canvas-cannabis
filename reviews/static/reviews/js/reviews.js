@@ -26,6 +26,7 @@ $("#modal-review").on("submit", ".review-create-form", function () {
       success: function(data) {
         if(data.form_is_valid) {
           $("#modal-review").modal("hide");
+          alert("Review Saved!")
         } else {
           $("#modal-review .modal-content").html(data.html_form);
         }
