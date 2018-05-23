@@ -1,10 +1,7 @@
 
 {% load bootstrap3 %}
-
 {% block content %}
-
-
-    <form method="POST" action='' enctype="multipart/form-data" class="form">
+    <form method="POST" action="{% url 'reviews:review' strain.id %}" enctype="multipart/form-data" class="review-create-form">
       {% csrf_token %}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,7 +11,6 @@
       </div> <!--/.modal-header-->
       <div class="modal-body">
         {% bootstrap_form form layout='inline' %}
-
       </div> <!--/.modal-body-->
       <div class="modal-footer">
         {% buttons %}
@@ -24,6 +20,4 @@
         {% endbuttons %}
       </div> <!--/.modal-footer-->
     </form>
-
-
 {% endblock %}

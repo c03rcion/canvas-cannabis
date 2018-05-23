@@ -1,7 +1,5 @@
 $(function () {
-
   $(".strain-review").click(function () {
-    console.log('hello')
     let url = $(this).data('url')
     $.ajax({
       url: url,
@@ -16,5 +14,22 @@ $(function () {
       }
     });
   });
-
 });
+
+$("#modal-review").on("submit", ".review-create-form", function () {
+    let form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function(data) {
+        if(data.form_is_valid) {
+          $("#modal-review").modal("hide");
+        } else {
+          $("#modal-review .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  });

@@ -4,7 +4,6 @@ from . import views
 
 urlpatterns = [
     url(r'^reviews/$', views.reviews, name="reviews"),
-    url(r'^create/$', views.review_create, name='review_create'),
     url(r'^(?P<id>\d+)/$', views.review_detail, name="detail"),
     url(r'^(?P<id>\d+)/update/$', views.review_update, name="update"),
     url(r'^(?P<id>\d+)/share/$', views.review_share, name="share"),

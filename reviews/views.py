@@ -188,22 +188,23 @@ def strain_detail(request, id=None):
     return render(request, "reviews/strain_detail.html", context)
 
 
-@login_required
-def review_create(request):
-    # strain = get_object_or_404(Strain, id=id)
-    form = ReviewForm()
-    context = {'form': form},
-    html_form = render_to_string(
-        'reviews/review_form.html',
-        context,
-        request=request,
-    )
-
-    return JsonResponse({'html_form': html_form})
+# @login_required
+# def review_create(request):
+#     # strain = get_object_or_404(Strain, id=id)
+#     form = ReviewForm()
+#     context = {'form': form},
+#     html_form = render_to_string(
+#         'reviews/review_form.html',
+#         context,
+#         request=request,
+#     )
+#
+#     return JsonResponse({'html_form': html_form})
 
 
 @login_required
 def strain_review(request, id=None):
+    data = dict()
     strain = get_object_or_404(Strain, id=id)
     if request.method == 'POST':
         form = ReviewForm(request.POST or None, request.FILES or None)
@@ -223,21 +224,23 @@ def strain_review(request, id=None):
             review.photo = photo
             review.rating = rating
             review.save()
+            data['form_is_valid'] = True
             create_action(request.user, 'wrote', review)
             messages.success(request, "Review saved.")
-            return HttpResponseRedirect(review.get_absolute_url())
+            # return HttpResponseRedirect(review.get_absolute_url())
         else:
             messages.error(request, "Review failed to save.")
+            data['form_is_valid'] = False
     else:
         form = ReviewForm()
     context = {
         "form": form,
         "strain": strain,
     }
-    html_form = render_to_string(
+    data['html_form'] = render_to_string(
         'reviews/review_form.html',
         context,
         request=request,
     )
-    return JsonResponse({'html_form': html_form})
+    return JsonResponse(data)
     # return render(request, "reviews/review_form.html", context)
